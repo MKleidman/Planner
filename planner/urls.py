@@ -12,7 +12,7 @@ router.register('task', views.TaskViewSet)
 router.register('subtask', views.SubTaskViewSet)
 
 urlpatterns = [
-	url(r'^', include(router.urls)),
+	url(r'^api/v1/', include(router.urls)),
 	url(r'^api-auth/', include('rest_framework.urls')),
 	url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 	url(r'^admin/', include(admin.site.urls)),
