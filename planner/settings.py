@@ -10,7 +10,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'planner',
-    'rest_framework'
+    'rest_framework',
+    'django_extensions'
 ]
 
 TEMPLATES = [
@@ -37,3 +38,4 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
     ]
 }
+
