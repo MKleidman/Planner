@@ -1,0 +1,18 @@
+planner_project/
+venv/
+planner.egg-info/
+.coverage
+docs/_build/
+docs/*.docset/
+htmlcov/
+*.pyc
+.Python
+bin/
+build/
+dist/
+include/
+lib/
+pip-selfcheck.json
+
+# For PyCharm
+.idea
