@@ -1,13 +1,12 @@
 from django.http import HttpResponse
 from django.conf.urls import include, url
 from django.contrib import admin
-from django.contrib.auth import authenticate, login
 from django.shortcuts import render_to_response
 from rest_framework import routers
 from planner import views
 
 def login_view(request):
-	return render_to_response('google-login.html')
+	return render_to_response('google-login.html', {"next": request.GET.get('next')})
 
 def health_check(request):
     """Health check for determining if the server is available in an Amazon Elastic Load Balancer."""
@@ -28,5 +27,5 @@ urlpatterns = [
 	url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 	url(r'^admin/', include(admin.site.urls)),
 	url(r'^login/$', login_view),
-	url(r'^/$', health_check)
+	url(r'', health_check)
 ]

@@ -11,7 +11,6 @@ class PlannerListUserAdmin(admin.ModelAdmin):
     pass
 
 
-
 class TasksInline(admin.TabularInline):
     model = models.Task
 
@@ -48,7 +47,6 @@ class TaskAdmin(admin.ModelAdmin):
 
     def get_ordering(self, request):
         return ['completed_at']
-
 
 
 admin.site.register(models.PlannerListUser, PlannerListUserAdmin)

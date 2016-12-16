@@ -1,9 +1,9 @@
 <head>
     <script src="https://apis.google.com/js/platform.js" async defer></script>
     <script>
-        var onSignIn(googleUser) {
+        function onSignIn(googleUser) {
             var profile = googleUser.getBasicProfile();
-            console.log('Email: ' + profile.getEmail());
+            document.location = {{ next }}
         }
     </script>
     <meta name="google-signin-client_id" content="790633741619-m8p7ihad5hdvu1k7tcabtt4cpa51p59l.apps.googleusercontent.com">
