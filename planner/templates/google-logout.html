@@ -3,13 +3,9 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script>
       window.onLoadCallback = function() {
-        console.log('auth2 loaded {{ google_client_id}}');
         gapi.load('auth2', function () {
             gapi.auth2.init({client_id: '{{ google_client_id }}'}).then(function(authInstance) {
-                console.log('auth2 initted with client_id {{google_client_id}}');
-                console.log('authInstance gotten ' + authInstance);
                 authInstance.signOut().then(function () {
-                    console.log('auth signed out');
                     jQuery('#sign-out').html('Signed Out<br><a href="/admin/login/">Sign in again</a>');
                 });
             });

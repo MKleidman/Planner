@@ -27,8 +27,7 @@
             xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
             xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
             xhr.onload = function() {
-              console.log('Signed in as: ' + xhr.responseText);
-              document.location = {{ next }};
+                document.location = '{{ next }}';
             };
             xhr.send('idtoken=' + id_token + '&email=' + profile.getEmail());
         }
