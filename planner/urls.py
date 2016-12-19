@@ -2,8 +2,9 @@ from django.http import HttpResponse, HttpResponseForbidden
 from django.conf.urls import include, url
 from django.conf import settings
 from django.contrib import admin
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, models
 from django.shortcuts import render_to_response, redirect
+from django.views.decorators.csrf import ensure_csrf_cookie
 from rest_framework import routers
 from planner import views
 from oauth2client import client, crypt
@@ -21,10 +22,13 @@ def complete_login(request):
         # Invalid token
         return HttpResponseForbidden()
     userid = idinfo['sub']
-    return redirect(request.POST['next'])
+    user = models.User.objects.get(email=request.POST['email'])
+    return HttpResponse('<html><body>{}</body></html>'.format(user.id), content_type='text/html')
 
+@ensure_csrf_cookie
 def login_view(request):
-    return render_to_response('google-login.html', {"next": request.GET.get('next')})
+    return render_to_response('google-login.html',
+                              {"next": request.GET.get('next'), "google_client_id": settings.GOOGLE_CLIENT_ID})
 
 def health_check(request):
     """Health check for determining if the server is available in an Amazon Elastic Load Balancer."""

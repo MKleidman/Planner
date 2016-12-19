@@ -1,6 +1,23 @@
 <head>
     <script src="https://apis.google.com/js/platform.js" async defer></script>
-    <script src="/path/to/js.cookie.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script>
+        function getCookie(name) {
+            var cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = jQuery.trim(cookies[i]);
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+    </script>
     <script>
         function onSignIn(googleUser) {
             var id_token = googleUser.getAuthResponse().id_token;
@@ -8,16 +25,15 @@
             var xhr = new XMLHttpRequest();
             xhr.open('POST', 'http://birdcall.tech/complete_login/');
             xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-            xhr.setRequestHeader("X-CSRFToken", Cookies.get('csrftoken'));
+            xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
             xhr.onload = function() {
               console.log('Signed in as: ' + xhr.responseText);
+              document.location = {{ next }};
             };
-            xhr.send('idtoken=' + id_token);
-            xhr.send('email=' + profile.getEmail());
-            xhr.send('next=' + {{ next }});
+            xhr.send('idtoken=' + id_token + '&email=' + profile.getEmail());
         }
     </script>
-    <meta name="google-signin-client_id" content="790633741619-m8p7ihad5hdvu1k7tcabtt4cpa51p59l.apps.googleusercontent.com">
+    <meta name="google-signin-client_id" content={{ google_client_id }}>
 </head>
 <body>
     Login view google
