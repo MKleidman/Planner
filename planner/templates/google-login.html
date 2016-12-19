@@ -2,8 +2,17 @@
     <script src="https://apis.google.com/js/platform.js" async defer></script>
     <script>
         function onSignIn(googleUser) {
+            var id_token = googleUser.getAuthResponse().id_token;
             var profile = googleUser.getBasicProfile();
-            document.location = {{ next }}
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', 'https://yourbackend.example.com/tokensignin');
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.onload = function() {
+              console.log('Signed in as: ' + xhr.responseText);
+            };
+            xhr.send('idtoken=' + id_token);
+            xhr.send('email=' + profile.getEmail());
+            xhr.send('next=' + {{ next }});
         }
     </script>
     <meta name="google-signin-client_id" content="790633741619-m8p7ihad5hdvu1k7tcabtt4cpa51p59l.apps.googleusercontent.com">
