@@ -2,7 +2,7 @@ from django.http import HttpResponse, HttpResponseForbidden
 from django.conf.urls import include, url
 from django.conf import settings
 from django.contrib import admin
-from django.contrib.auth import authenticate, login, models
+from django.contrib.auth import authenticate, login, models, logout
 from django.shortcuts import render_to_response, redirect
 from django.views.decorators.csrf import ensure_csrf_cookie
 from rest_framework import routers
@@ -23,12 +23,17 @@ def complete_login(request):
         return HttpResponseForbidden()
     userid = idinfo['sub']
     user = models.User.objects.get(email=request.POST['email'])
+    login(request, user)
     return HttpResponse('<html><body>{}</body></html>'.format(user.id), content_type='text/html')
 
 @ensure_csrf_cookie
 def login_view(request):
     return render_to_response('google-login.html',
                               {"next": request.GET.get('next'), "google_client_id": settings.GOOGLE_CLIENT_ID})
+
+def logout_view(request):
+    logout(request)
+    return render_to_response('google-logout.html', content_type='text/html')
 
 def health_check(request):
     """Health check for determining if the server is available in an Amazon Elastic Load Balancer."""
@@ -51,5 +56,6 @@ urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^login/$', login_view),
     url(r'^complete_login/$', complete_login),
+    url(r'^admin/logout/', logout_view),
     url(r'', health_check)
 ]
