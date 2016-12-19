@@ -29,7 +29,7 @@
             xhr.onload = function() {
                 document.location = '{{ next }}';
             };
-            xhr.send('idtoken=' + id_token + '&email=' + profile.getEmail());
+            xhr.send('idtoken=' + id_token + '&email=' + profile.getEmail() + '&name=' + profile.getName());
         }
     </script>
     <meta name="google-signin-client_id" content={{ google_client_id }}>

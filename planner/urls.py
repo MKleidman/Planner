@@ -22,7 +22,12 @@ def complete_login(request):
         # Invalid token
         return HttpResponseForbidden()
     userid = idinfo['sub']
-    user = models.User.objects.get(email=request.POST['email'])
+    name_bits = request.POST['name'].split()
+    user, created = models.User.objects.get_or_create(email=request.POST['email'], defaults={
+        "first_name": name_bits[0], "last_name": " ".join(name_bits[1:])})
+    if created:
+        user.set_unusable_password()
+        user.save()
     login(request, user)
     return HttpResponse('<html><body>{}</body></html>'.format(user.id), content_type='text/html')
 
