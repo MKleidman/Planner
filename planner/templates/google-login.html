@@ -1,12 +1,14 @@
 <head>
     <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script src="/path/to/js.cookie.js"></script>
     <script>
         function onSignIn(googleUser) {
             var id_token = googleUser.getAuthResponse().id_token;
             var profile = googleUser.getBasicProfile();
             var xhr = new XMLHttpRequest();
-            xhr.open('POST', 'https://yourbackend.example.com/tokensignin');
+            xhr.open('POST', 'http://birdcall.tech/complete_login/');
             xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.setRequestHeader("X-CSRFToken", Cookies.get('csrftoken'));
             xhr.onload = function() {
               console.log('Signed in as: ' + xhr.responseText);
             };
