@@ -53,9 +53,9 @@ urlpatterns = [
     url(r'^api-auth/', include('rest_framework.urls')),
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
     url(r'^admin/login/', login_view),
+    url(r'^admin/logout/', logout_view),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^login/$', login_view),
     url(r'^complete_login/$', complete_login),
-    url(r'^admin/logout/', logout_view),
     url(r'', health_check)
 ]
