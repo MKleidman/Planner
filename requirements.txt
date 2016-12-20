@@ -6,4 +6,4 @@ docutils==0.12
 djangorestframework==3.5.3
 django-filter==1.0.1
 django-extensions==1.7.5
-oauth2client==4.0.0
+-e git+https://github.com/MKleidman/google_login.git@master#egg=google_login

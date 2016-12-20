@@ -11,7 +11,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'planner',
     'rest_framework',
-    'django_extensions'
+    'django_extensions',
+    'google_login'
 ]
 
 TEMPLATES = [
